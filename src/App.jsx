@@ -3,10 +3,12 @@ import "./App.scss";
 import axios from "axios";
 import Header from "./assets/components/Header";
 import Section from "./assets/components/Section";
+import Panier from "./assets/components/Panier";
 
 function App() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [cart, setCart] = useState([]);
 
   const fetchData = async () => {
     const response = await axios.get(
@@ -34,11 +36,21 @@ function App() {
           <div className="menu">
             {data.categories.map((categorie, index) => {
               if (categorie.meals.length !== 0) {
-                return <Section key={index} data={categorie} />;
+                return (
+                  <Section
+                    setCart={setCart}
+                    cart={cart}
+                    key={index}
+                    data={categorie}
+                  />
+                );
               } else {
                 return null;
               }
             })}
+          </div>
+          <div className="panier">
+            <Panier cart={cart} setCart={setCart} />
           </div>
         </div>
       </main>

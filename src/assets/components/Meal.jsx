@@ -1,8 +1,23 @@
 function Meal(props) {
-  const data = props.data;
+  const { data, setCart, cart } = props;
+
   return (
     <div className="meal">
-      <div className="card">
+      <div
+        className="card"
+        onClick={() => {
+          for (let i = 0; i < cart.length; i++) {
+            if (cart[i].title === data.title) {
+              const newCart = [...cart];
+              newCart[i].quantity++;
+              return setCart(newCart);
+            }
+          }
+          const newCart = [...cart];
+          newCart.push({ title: data.title, quantity: 1, price: data.price });
+          setCart(newCart);
+        }}
+      >
         <div className="text">
           <h3>{data.title}</h3>
           <p>{data.description}</p>
