@@ -4,11 +4,13 @@ import axios from "axios";
 import Header from "./assets/components/Header";
 import Section from "./assets/components/Section";
 import Panier from "./assets/components/Panier";
+import PanierModal from "./assets/components/PanierModal";
 
 function App() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [cart, setCart] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const fetchData = async () => {
     const response = await axios.get(
@@ -30,8 +32,17 @@ function App() {
         title={data.restaurant.name}
         baseline={data.restaurant.description}
         image={data.restaurant.picture}
+        setShowModal={setShowModal}
+        cart={cart}
       />
       <main>
+        {showModal && (
+          <PanierModal
+            cart={cart}
+            setCart={setCart}
+            setShowModal={setShowModal}
+          />
+        )}
         <div className="container">
           <div className="menu">
             {data.categories.map((categorie, index) => {

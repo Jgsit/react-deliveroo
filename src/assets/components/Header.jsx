@@ -1,5 +1,10 @@
+import { FaShoppingCart } from "react-icons/fa";
 function Header(props) {
-  const { title, baseline, image } = props;
+  const { title, baseline, image, setShowModal, cart } = props;
+  let counter = 0;
+  for (let i = 0; i < cart.length; i++) {
+    counter += cart[i].quantity;
+  }
   return (
     <header>
       <div className="logo">
@@ -17,6 +22,15 @@ function Header(props) {
               fillRule="evenodd"
             />
           </svg>
+          <div className="notif">
+            <FaShoppingCart
+              className="cart"
+              onClick={() => {
+                setShowModal((prevState) => !prevState);
+              }}
+            />
+            {counter !== 0 && <div>{counter}</div>}
+          </div>
         </div>
       </div>
       <div className="restaurantInfo">
